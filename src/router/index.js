@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import OrderList from '@/components/OrderList'
 import OrderDetail from '@/components/OrderDetail'
+import Issue from '@/components/Issue'
 import PutNeed from '@/components/PutNeed'
 import SupplyQuo from '@/components/SupplyQuo'
 
@@ -23,6 +24,11 @@ var router = new Router({
       path: '/detail',
       name: 'OrderDetail',
       component: OrderDetail
+    },
+    {
+      path: '/issue',
+      name: 'Issue',
+      component: Issue
     },
     {
       path: '/need',

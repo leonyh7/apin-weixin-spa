@@ -4,9 +4,8 @@
       <tab-item v-for="(tab, index) in tabs" :key="index" @click.native="toggleTab(index)">{{tab.name}}</tab-item>
     </tab>
   
-    <swipeout class="page" :class="{active: index==i}" v-for="(tab,i) in tabs" :key="i">
-  
-      <swipeout-item ref="swipeoutItem" :right-menu-width="210" class="list" v-for="(order,j) in tab.orderList" :key="i+''+j" @click.native="toDetail(order.orderId)">
+    <swipeout class="page" :class="{active: index==i}" v-for="(tab,i) in tabs" :key="i"> 
+      <swipeout-item ref="swipeoutItem" class="list pending" v-for="(order,j) in tab.orderList" :right-menu-width="210" :key="i+''+j" @click.native="toDetail(order.orderId, tab.type)">
         <div slot="right-menu">
           <swipeout-button @click.native="deleteOrder(j)" type="warn" :width="70">删除</swipeout-button>
         </div>
@@ -40,7 +39,6 @@
     <router-link class="add" :to="{path: '/need'}">
       +
     </router-link>
-  
   </div>
 </template>
 
@@ -56,19 +54,29 @@ export default {
         init: false,
         orderList: [],
         isLoaded: false,
-        pages: 0
+        pages: 0,
+        type: 0
       }, {
         name: "处理中",
         init: false,
         orderList: [],
         isLoaded: false,
-        pages: 0
+        pages: 0,
+        type: 1
+      }, {
+        name: "已报价",
+        init: false,
+        orderList: [],
+        isLoaded: false,
+        pages: 0,
+        type: 2
       }, {
         name: "已出票",
         init: false,
         orderList: [],
         isLoaded: false,
-        pages: 0
+        pages: 0,
+        type: 3
       }]
     }
   },
@@ -102,9 +110,28 @@ export default {
       this.tabs[this.index].orderList.splice(index, 1);
       event.stopPropagation();
     },
-    toDetail(id) {
-      this.$router.push({ path: '/detail' })
+    toDetail(id, type) {
+      switch (type) {
+        case 0:
+          this.$router.push({ path: '/detail', query: { type } })
+          break;
+        case 1:
+          this.$router.push({ path: '/supply' })
+          break;
+        case 2:
+          this.$router.push({ path: '/issue', query: { type } })
+          break;
+        case 3:
+          this.$router.push({ path: '/issue', query: { type } })
+          break;
+        default:
+          break;
+      }
     }
+  },
+  created() {
+    let type = Number(this.$route.query.type)
+    if (type) this.index = type
   },
   mounted() {
     this.getOrderList()
@@ -146,6 +173,10 @@ export default {
   margin-bottom: 10px;
 }
 
+.list.pending {
+  border-left: solid 3px #04BE02;
+}
+
 .page .list:last-child {
   margin-bottom: 0;
 }
@@ -161,20 +192,14 @@ export default {
 
 
 .row {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
 }
 
 .row .col:first-child {
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
   flex: 1;
 }
 
 .row .col:nth-child(2) {
-  -webkit-box-flex: 2;
-  -ms-flex: 2;
   flex: 2;
 }
 
@@ -183,13 +208,15 @@ export default {
 }
 
 .add {
+  display: block;
   position: absolute;
   right: 20px;
   bottom: 20px;
   background-color: #04BE02;
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
+  width: 40px;
+  height: 40px;
+  line-height: normal;
+  font-size: 30px;
   border-radius: 50%;
   color: #fff;
   text-align: center;

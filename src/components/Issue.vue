@@ -13,11 +13,25 @@
         <cell title="到达城市" :value="orderInfo.endCity"></cell>
         <cell title="返程天数" :value="orderInfo.days"></cell>
         <cell title="出行人数" :value="orderInfo.number"></cell>
-        <cell title="儿童人数" :value="orderInfo.child"></cell>
+        <cell title="业务员姓名" :value="orderInfo.child"></cell>
+        <cell title="供应匹配" :value="orderInfo.child"></cell>
+        <cell title="起飞机场" :value="orderInfo.child"></cell>
+        <cell title="降落机场" :value="orderInfo.child"></cell>
+        <cell title="供应商A" :value="orderInfo.child"></cell>
+        <cell title="航班信息" :value="orderInfo.child"></cell>
+        <cell title="总价含税/人" :value="orderInfo.child"></cell>
+        <cell title="供应商B" :value="orderInfo.child"></cell>
+        <cell title="航班信息" :value="orderInfo.child"></cell>
+        <cell title="总价含税/人" :value="orderInfo.child"></cell>
+        <cell title="供应商C" :value="orderInfo.child"></cell>
+        <cell title="航班信息" :value="orderInfo.child"></cell>
+        <cell title="总价含税/人" :value="orderInfo.child"></cell>
+        <cell title="未成交原因" :value="orderInfo.child"></cell>
+        <cell title="备注" :value="orderInfo.child"></cell>
       </group>
     </flexbox-item>
     <flexbox-item class="apin-btn-area">
-      <x-button type="primary" class="apin-btn" @click.native="supply">领单</x-button>
+      <x-button type="primary" class="apin-btn" @click.native="toList">{{tip}}</x-button>
     </flexbox-item>
   </flexbox>
 </template>
@@ -34,11 +48,29 @@ export default {
   computed: {
     type() {
       return this.$route.query.type
+    },
+    tip() {
+      let tip = ''
+      // switch (this.type) {
+      //   case '2':
+      //     tip = "出票";
+      //     break;
+      //   case '3':
+      //   debugger;
+      //     tip = "确认";
+      //     break;
+      // }
+      if (this.type == '3') {
+        tip = "确认";
+      }else {
+        tip = '出票'
+      }
+      return tip;
     }
   },
   methods: {
-    supply() {
-      this.$router.push({ path: '/list', query: { type: 1 } });
+    toList() {
+      this.$router.push({ path: '/list', query: { type: 3 } });
     }
   },
   mounted() {

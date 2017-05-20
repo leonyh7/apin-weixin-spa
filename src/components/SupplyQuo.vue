@@ -25,7 +25,7 @@
       </group>
     </flexbox-item>
     <flexbox-item class="apin-btn-area">
-      <x-button type="primary" @click.native="confirm">确认</x-button>
+      <x-button type="primary" @click.native="confirm">出单</x-button>
     </flexbox-item>
   </flexbox>
 </template>
@@ -70,7 +70,9 @@ export default {
       });
     },
     confirm() {
-      if (this.validate()) { }
+      // if (this.validate()) { 
+        this.$router.push({ path: '/list', query: { type: 2 } });
+      //  }
     }
   }
 }
