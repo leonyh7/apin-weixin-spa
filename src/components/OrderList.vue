@@ -37,7 +37,7 @@
     </swipeout>
   
     <router-link class="add" :to="{path: '/need'}">
-      +
+      <span>+</span>
     </router-link>
   </div>
 </template>
@@ -208,17 +208,21 @@ export default {
 }
 
 .add {
-  display: block;
+  display: flex;
   position: absolute;
   right: 20px;
   bottom: 20px;
   background-color: #04BE02;
   width: 40px;
   height: 40px;
-  line-height: normal;
-  font-size: 30px;
+  font-size: 24px;
   border-radius: 50%;
   color: #fff;
-  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.add span {
+  height: 40px;
 }
 </style>
